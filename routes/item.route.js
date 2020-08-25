@@ -26,7 +26,21 @@ router.get("/:id", async (req, res) => {
     @desc updates one item
     @access public
 */
-router.put("/:id", async (req, res) => {});
+router.put("/:id", async (req, res) => {
+  try {
+    let item = await Item.findByIdAndUpdate(req.params.id, req.body);
+
+    if (item) {
+      res.status(200).json({
+        message: "nothing spoil",
+      });
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "ok already or not, maybe not work",
+    });
+  }
+});
 /* 
     @route DELETE api/items/:id
     @desc deletes one item
