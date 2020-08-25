@@ -22,7 +22,17 @@ export default class Item extends Component {
     return (
       <div>
         <h1>Single Item</h1>
-        {item ? <div>{item.name}</div> : "ho liao buey!"}
+        {item ? (
+          <div>
+            {item.name}
+            <div>{item.text} </div>
+            <div>
+              <img src={item.picture} width="400" />{" "}
+            </div>
+          </div>
+        ) : (
+          "ho liao buey!"
+        )}
       </div>
     );
   }
