@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from "react";
+import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import Home from "./component/Home";
+import Item from "./component/items/Item";
+import Register from "./component/auth/Register";
+import Login from "./component/auth/Login";
+export default class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" exact render={() => <Home />} />
+          <Route path="/item/:id" exact render={() => <Item />} />
+          <Route path="/register" exact render={() => <Register />} />
+          <Route path="/login" exact render={() => <Login />} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
-export default App;
+//    / all items
+//    /:id one single item
+//    /register
+//    /login

@@ -32,7 +32,22 @@ router.put("/:id", async (req, res) => {});
     @desc deletes one item
     @access public
 */
-router.delete("/:id", async (req, res) => {});
+router.delete("/:id", async (req, res) => {
+  try {
+    let itemDelete = await Item.findByIdAndDelete(req.params.id);
+
+    if (itemDelete) {
+      res.status(200).json({
+        message: "U dón comót am!",
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "失败",
+      statuscode: "EB500",
+    });
+  }
+});
 
 /* 
     @route POST api/items
@@ -64,7 +79,7 @@ router.get("/", async (req, res) => {
   try {
     let items = await Item.find();
 
-    res.status(200).json({
+    res.status(200).send({
       count: items.length,
       items,
     });
