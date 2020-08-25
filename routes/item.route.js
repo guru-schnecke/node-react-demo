@@ -32,7 +32,21 @@ router.put("/:id", async (req, res) => {});
     @desc deletes one item
     @access public
 */
-router.delete("/:id", async (req, res) => {});
+router.delete("/:id", async (req, res) => {
+  try {
+    let item = await Item.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      message: "U dón comót am!",
+      item,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "oh non je ne sais pas ce qui s’est passé",
+      statuscode: "EB500",
+    });
+  }
+});
 
 /* 
     @route POST api/items
