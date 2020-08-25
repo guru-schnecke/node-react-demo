@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/guru-schnecke/node-react-demo/issues"
   },
-  "homepage": "https://github.com/guru-schnecke/node-react-demo#readme"
+  "homepage": "https://github.com/guru-schnecke/node-react-demo#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.0"
+  }
 }
