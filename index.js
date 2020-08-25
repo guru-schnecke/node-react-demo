@@ -6,6 +6,7 @@ const app = express();
 require("./config/db"); //calls my mongoose connection to cleanup this file
 app.use(express.json()); //allows me to receive JSON files from HEADER of REQUEST
 //=== setup my routes
+app.use("/api/items", require("./routes/item.route"));
 
 //=== 404 errors
 app.get("*", (req, res) => {
