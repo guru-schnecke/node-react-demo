@@ -38,7 +38,7 @@ export default class App extends Component {
             exact
             render={() => <Home items={this.state.items} />}
           />
-          <Route path="/item/:id" exact render={() => <Item />} />
+          <Route path="/item/:id" exact component={Item} />
           <Route path="/register" exact render={() => <Register />} />
           <Route path="/login" exact render={() => <Login />} />
         </Switch>
