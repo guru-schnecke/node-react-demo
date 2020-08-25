@@ -28,16 +28,52 @@ router.get("/:id", async (req, res) => {
 */
 router.put("/:id", async (req, res) => {});
 /* 
-    @route GET api/items/:id
+    @route DELETE api/items/:id
     @desc deletes one item
     @access public
 */
 router.delete("/:id", async (req, res) => {});
+
+/* 
+    @route POST api/items
+    @desc Gets all items
+    @access public
+*/
+router.post("/", async (req, res) => {
+  try {
+    let item = new Item(req.body);
+
+    let savedItem = await item.save();
+
+    res.status(201).json({
+      message: "成功",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "失败",
+      statuscode: "EB500",
+    });
+  }
+});
 /* 
     @route GET api/items
     @desc Gets all items
     @access public
 */
-router.get("/", async (req, res) => {});
+router.get("/", async (req, res) => {
+  try {
+    let items = await Item.find();
+
+    res.status(200).json({
+      count: items.length,
+      items,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "1010101001111000111",
+      statuscode: "EB500",
+    });
+  }
+});
 
 module.exports = router;
