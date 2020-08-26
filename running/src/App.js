@@ -1,5 +1,10 @@
 import React, { Component } from "react";
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  Switch,
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Home from "./component/Home";
 import Item from "./component/items/Item";
 import Register from "./component/auth/Register";
@@ -7,6 +12,7 @@ import Login from "./component/auth/Login";
 import Navigation from "./component/Navigation";
 import Axios from "axios";
 import AddItem from "./component/items/AddItem";
+import { decode } from "jsonwebtoken";
 
 const URL = process.env.REACT_APP_URL;
 export default class App extends Component {
@@ -35,9 +41,24 @@ export default class App extends Component {
       });
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+    let token = localStorage.getItem("token");
+
+    if (!(token == null)) {
+      let decodedToken = decode(token);
+
+      if (!decodedToken) {
+        localStorage.removeItem("token");
+      } else {
+        this.setState({
+          isAuth: true,
+        });
+      }
+    }
+  }
 
   render() {
+    let { isAuth } = this.state;
     return (
       <Router>
         <Navigation />
@@ -50,15 +71,12 @@ export default class App extends Component {
           <Route
             path="/login"
             exact
-            render={() => <Login login={this.loginHandler} />}
+            render={() =>
+              isAuth ? <Redirect to="/" /> : <Login login={this.loginHandler} />
+            }
           />
         </Switch>
       </Router>
     );
   }
 }
-
-//    / all items
-//    /:id one single item
-//    /register
-//    /login
