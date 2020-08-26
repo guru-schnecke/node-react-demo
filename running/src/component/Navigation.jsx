@@ -2,7 +2,7 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-function Navigation() {
+function Navigation({ user }) {
   return (
     <Navbar bg="dark" expand="lg" variant="dark">
       <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
@@ -15,6 +15,28 @@ function Navigation() {
           <Link className="nav-link" to="/item/add">
             Add item
           </Link>
+        </Nav>
+
+        <Nav>
+          {user ? (
+            <>
+              <Nav.Link href="#user">
+                {user.firstname} {user.lastname}
+              </Nav.Link>
+              <Link to="/logout" className="nav-link">
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="nav-link">
+                Login
+              </Link>
+              <Link to="/register" className="nav-link">
+                Register
+              </Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>

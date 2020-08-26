@@ -110,22 +110,21 @@ export default class App extends Component {
 
         <Switch>
           <PrivateRoute exact path="/" isAuth={isAuth} component={Home} />
-          <PrivateRoute
+          {/* <PrivateRoute
             exact
             path="/item/add"
             isAuth={isAuth}
             component={AddItem}
-          />
+          /> */}
 
+          {/* <Route path="/" exact render={() => <Home />} /> */}
+          <Route path="/item/add" exact render={() => <AddItem />} />
           <PrivateRoute
             exact
             path="/item/:id"
             isAuth={isAuth}
             component={Item}
           />
-
-          {/* <Route path="/" exact render={() => <Home />} /> */}
-          {/* <Route path="/item/add" exact render={() => <AddItem />} /> */}
           {/* <Route path="/item/:id" component={Item} /> */}
           <Route
             path="/register"
