@@ -23,9 +23,52 @@ export default class App extends Component {
     user: null,
   };
 
+  getUserProfile = (token) => {
+    Axios.get(`${URL}/auth/user`, {
+      headers: {
+        "x-auth-token": token,
+      },
+    })
+      .then((res) => {
+        console.log(res.data);
+
+        this.setState({
+          isAuth: true,
+          user: res.data.user,
+        });
+      })
+      .catch((err) => {
+        // console.log(err);
+        // this.setState({
+        //   isAuth: false,
+        // });
+      });
+  };
+
   loginHandler = (credentials) => {
     //login here
     Axios.post(`${URL}/auth/login`, credentials)
+      .then((res) => {
+        console.log(res.data);
+
+        localStorage.setItem("token", res.data.token);
+        this.getUserProfile(res.data.token); //get uptodate user information
+
+        this.setState({
+          isAuth: true,
+        });
+      })
+      .catch((err) => {
+        // console.log(err);
+        this.setState({
+          isAuth: false,
+        });
+      });
+  };
+
+  registerHandler = (credentials) => {
+    //login here
+    Axios.post(`${URL}/auth/register`, credentials)
       .then((res) => {
         console.log(res.data);
 
@@ -51,25 +94,44 @@ export default class App extends Component {
       if (!decodedToken) {
         localStorage.removeItem("token");
       } else {
-        this.setState({
-          isAuth: true,
-        });
+        this.getUserProfile(token);
+        // this.setState({
+        //   isAuth: true,
+        // });
       }
     }
   }
 
   render() {
-    let { isAuth } = this.state;
+    let { isAuth, user } = this.state;
     return (
       <Router>
-        <Navigation />
+        <Navigation user={user} />
 
         <Switch>
           <PrivateRoute exact path="/" isAuth={isAuth} component={Home} />
+          <PrivateRoute
+            exact
+            path="/item/add"
+            isAuth={isAuth}
+            component={AddItem}
+          />
+
+          <PrivateRoute
+            exact
+            path="/item/:id"
+            isAuth={isAuth}
+            component={Item}
+          />
+
           {/* <Route path="/" exact render={() => <Home />} /> */}
-          <Route path="/item/add" exact render={() => <AddItem />} />
-          <Route path="/item/:id" component={Item} />
-          <Route path="/register" exact render={() => <Register />} />
+          {/* <Route path="/item/add" exact render={() => <AddItem />} /> */}
+          {/* <Route path="/item/:id" component={Item} /> */}
+          <Route
+            path="/register"
+            exact
+            render={() => <Register register={this.registerHandler} />}
+          />
           <Route
             path="/login"
             exact

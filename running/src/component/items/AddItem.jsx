@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Row } from "react-bootstrap";
 import Axios from "axios";
-import { withRouter, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 const URL = process.env.REACT_APP_URL;
 class AddItem extends Component {

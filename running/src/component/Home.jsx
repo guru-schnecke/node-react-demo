@@ -19,7 +19,7 @@ export default class Home extends Component {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         // if (this.mounted) {
         this.setState({ items: res.data.items });
         // }
@@ -40,8 +40,9 @@ export default class Home extends Component {
           <ShowMe hello="hello hello hello" />
           <Row>
             {this.state.items.map((item) => (
-              <Col key={item._id} md="3">
+              <Col key={item._id} md="3" className="mb-3">
                 <Card>
+                  <Card.Img variant="top" src={item.picture} />
                   <Card.Body>
                     {item.name}
                     <div>

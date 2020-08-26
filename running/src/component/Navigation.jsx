@@ -12,6 +12,9 @@ function Navigation() {
           <Link className="nav-link" to="/">
             Home
           </Link>
+          <Link className="nav-link" to="/item/add">
+            Add item
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Row, Form, Button, Container } from "react-bootstrap";
-import Axios from "axios";
 
-const URL = process.env.REACT_APP_URL;
 export default class Login extends Component {
   state = {
     email: "",
