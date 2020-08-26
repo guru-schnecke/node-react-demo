@@ -10,27 +10,10 @@ import AddItem from "./component/items/AddItem";
 
 const URL = process.env.REACT_APP_URL;
 export default class App extends Component {
-  mounted = true;
   state = {
     items: [],
-  };
-
-  fetchItems = () => {
-    Axios.get(`${URL}/items`, {
-      headers: {
-        "x-auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0NWQyMzg5MTYxZWRiY2FiNTQ2MDEzIn0sImlhdCI6MTU5ODQxMzY2NiwiZXhwIjoxOTU4NDEzNjY2fQ.D9oMAE3sbi7_jjs8Wr61exjyCRzGd_ZKqABwS0GdArQ",
-      },
-    })
-      .then((res) => {
-        console.log(res.data);
-        // if (this.mounted) {
-        this.setState({ items: res.data.items });
-        // }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    isAuth: false,
+    user: null,
   };
 
   loginHandler = (credentials) => {
@@ -38,17 +21,21 @@ export default class App extends Component {
     Axios.post(`${URL}/auth/login`, credentials)
       .then((res) => {
         console.log(res.data);
+
+        localStorage.setItem("token", res.data.token);
+        this.setState({
+          isAuth: true,
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        // console.log(err);
+        this.setState({
+          isAuth: false,
+        });
+      });
   };
 
-  componentDidMount() {
-    this.fetchItems();
-  }
-
-  // componentWillMount() {
-  //   this.mounted = false;
-  // }
+  componentDidMount() {}
 
   render() {
     return (
@@ -56,11 +43,7 @@ export default class App extends Component {
         <Navigation />
 
         <Switch>
-          <Route
-            path="/"
-            exact
-            render={() => <Home items={this.state.items} />}
-          />
+          <Route path="/" exact render={() => <Home />} />
           <Route path="/item/add" exact render={() => <AddItem />} />
           <Route path="/item/:id" component={Item} />
           <Route path="/register" exact render={() => <Register />} />
