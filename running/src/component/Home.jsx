@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row, Card, Col } from "react-bootstrap";
+import { Container, Row, Card, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import ShowMe from "./items/ShowMe";
@@ -29,6 +29,13 @@ export default class Home extends Component {
       });
   };
 
+  deleteItem = (e) => {
+    // console.log(e.target.id);
+    Axios.delete(`${URL}/items/${e.target.id}`).then((res) => {
+      this.fetchItems();
+    });
+  };
+
   componentDidMount() {
     this.fetchItems();
   }
@@ -47,6 +54,13 @@ export default class Home extends Component {
                     {item.name}
                     <div>
                       <Link to={`/item/${item._id}`}>See Item</Link>
+                      <Button
+                        onClick={this.deleteItem}
+                        variant="danger"
+                        id={item._id}
+                      >
+                        Delete
+                      </Button>
                     </div>
                   </Card.Body>
                 </Card>
