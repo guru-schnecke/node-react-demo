@@ -25,6 +25,19 @@ export default class App extends Component {
     user: null,
   };
 
+  logoutHandler = (e) => {
+    e.preventDefault();
+    console.log("i logged out");
+    this.setState({
+      items: [],
+      errorMessage: null,
+      isAuth: false,
+      user: null,
+    });
+
+    localStorage.removeItem("token");
+  };
+
   getUserProfile = (token) => {
     Axios.get(`${URL}/auth/user`, {
       headers: {
@@ -32,7 +45,7 @@ export default class App extends Component {
       },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
 
         this.setState({
           isAuth: true,
@@ -109,7 +122,7 @@ export default class App extends Component {
     let { isAuth, user, errorMessage } = this.state;
     return (
       <Router>
-        <Navigation user={user} />
+        <Navigation user={user} logout={this.logoutHandler} />
         {errorMessage && <Alert>{errorMessage}</Alert>}
         <Switch>
           <PrivateRoute exact path="/" isAuth={isAuth} component={Home} />
