@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Item = require("../model/item.model");
+const checkToken = require("../config/config");
 
 /* 
     @route GET api/items/:id
@@ -89,7 +90,7 @@ router.post("/", async (req, res) => {
     @desc Gets all items
     @access public
 */
-router.get("/", async (req, res) => {
+router.get("/", checkToken, async (req, res) => {
   try {
     let items = await Item.find();
 
