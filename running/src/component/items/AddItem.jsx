@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Form, Button, Row } from "react-bootstrap";
 import Axios from "axios";
+import { withRouter, Redirect } from "react-router-dom";
+
 const URL = process.env.REACT_APP_URL;
-export default class AddItem extends Component {
+class AddItem extends Component {
   state = {
     name: "",
     picture: "",
     text: "",
+    status: false,
   };
 
   changeHandler = (e) => {
@@ -20,6 +23,8 @@ export default class AddItem extends Component {
     Axios.post(`${URL}/items`, this.state)
       .then((res) => {
         console.log("done");
+        this.setState({ status: true });
+        // this.props.history.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -28,6 +33,11 @@ export default class AddItem extends Component {
 
   render() {
     let { name, picture, text } = this.state;
+
+    if (this.state.status) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div>
         <h1>Add Item</h1>
@@ -59,3 +69,7 @@ export default class AddItem extends Component {
     );
   }
 }
+
+// export default withRouter(AddItem);
+
+export default AddItem;
