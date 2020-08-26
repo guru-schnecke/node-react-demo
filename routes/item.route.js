@@ -91,6 +91,8 @@ router.post("/", async (req, res) => {
     @access public
 */
 router.get("/", checkToken, async (req, res) => {
+  console.log(req.user);
+
   try {
     let items = await Item.find();
 

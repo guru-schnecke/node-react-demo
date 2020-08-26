@@ -16,9 +16,14 @@ export default class App extends Component {
   };
 
   fetchItems = () => {
-    Axios.get(`${URL}/items`)
+    Axios.get(`${URL}/items`, {
+      headers: {
+        "x-auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNWY0NWQyMzg5MTYxZWRiY2FiNTQ2MDEzIn0sImlhdCI6MTU5ODQxMzY2NiwiZXhwIjoxOTU4NDEzNjY2fQ.D9oMAE3sbi7_jjs8Wr61exjyCRzGd_ZKqABwS0GdArQ",
+      },
+    })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         // if (this.mounted) {
         this.setState({ items: res.data.items });
         // }
@@ -26,6 +31,15 @@ export default class App extends Component {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  loginHandler = (credentials) => {
+    //login here
+    Axios.post(`${URL}/auth/login`, credentials)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
@@ -50,7 +64,11 @@ export default class App extends Component {
           <Route path="/item/add" exact render={() => <AddItem />} />
           <Route path="/item/:id" component={Item} />
           <Route path="/register" exact render={() => <Register />} />
-          <Route path="/login" exact render={() => <Login />} />
+          <Route
+            path="/login"
+            exact
+            render={() => <Login login={this.loginHandler} />}
+          />
         </Switch>
       </Router>
     );
