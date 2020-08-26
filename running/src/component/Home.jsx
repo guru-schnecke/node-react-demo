@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Axios from "axios";
+import ShowMe from "./items/ShowMe";
 
 const URL = process.env.REACT_APP_URL;
 
@@ -36,6 +37,7 @@ export default class Home extends Component {
       <div>
         <h1>Home</h1>
         <Container fluid>
+          <ShowMe hello="hello hello hello" />
           <Row>
             {this.state.items.map((item) => (
               <Col key={item._id} md="3">

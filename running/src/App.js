@@ -13,6 +13,7 @@ import Navigation from "./component/Navigation";
 import Axios from "axios";
 import AddItem from "./component/items/AddItem";
 import { decode } from "jsonwebtoken";
+import PrivateRoute from "./component/PrivateRoute";
 
 const URL = process.env.REACT_APP_URL;
 export default class App extends Component {
@@ -64,7 +65,8 @@ export default class App extends Component {
         <Navigation />
 
         <Switch>
-          <Route path="/" exact render={() => <Home />} />
+          <PrivateRoute exact path="/" isAuth={isAuth} component={Home} />
+          {/* <Route path="/" exact render={() => <Home />} /> */}
           <Route path="/item/add" exact render={() => <AddItem />} />
           <Route path="/item/:id" component={Item} />
           <Route path="/register" exact render={() => <Register />} />
