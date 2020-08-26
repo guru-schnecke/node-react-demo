@@ -10,6 +10,7 @@ import AddItem from "./component/items/AddItem";
 
 const URL = process.env.REACT_APP_URL;
 export default class App extends Component {
+  mounted = true;
   state = {
     items: [],
   };
@@ -18,7 +19,9 @@ export default class App extends Component {
     Axios.get(`${URL}/items`)
       .then((res) => {
         // console.log(res.data);
+        // if (this.mounted) {
         this.setState({ items: res.data.items });
+        // }
       })
       .catch((err) => {
         console.log(err);
@@ -29,10 +32,15 @@ export default class App extends Component {
     this.fetchItems();
   }
 
+  // componentWillMount() {
+  //   this.mounted = false;
+  // }
+
   render() {
     return (
       <Router>
         <Navigation />
+
         <Switch>
           <Route
             path="/"

@@ -9,6 +9,7 @@ export default class EditItem extends Component {
   };
 
   changeHandler = (e) => {
+    console.log("I am editing the: ", e.target.name);
     //allow a re render in item.jsx
     this.setState({ [e.target.name]: e.target.value });
   };
