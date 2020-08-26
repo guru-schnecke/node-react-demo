@@ -14,11 +14,13 @@ import Axios from "axios";
 import AddItem from "./component/items/AddItem";
 import { decode } from "jsonwebtoken";
 import PrivateRoute from "./component/PrivateRoute";
+import { Alert } from "react-bootstrap";
 
 const URL = process.env.REACT_APP_URL;
 export default class App extends Component {
   state = {
     items: [],
+    errorMessage: null,
     isAuth: false,
     user: null,
   };
@@ -62,6 +64,7 @@ export default class App extends Component {
         // console.log(err);
         this.setState({
           isAuth: false,
+          errorMessage: err.response.data.message,
         });
       });
   };
@@ -103,11 +106,11 @@ export default class App extends Component {
   }
 
   render() {
-    let { isAuth, user } = this.state;
+    let { isAuth, user, errorMessage } = this.state;
     return (
       <Router>
         <Navigation user={user} />
-
+        {errorMessage && <Alert>{errorMessage}</Alert>}
         <Switch>
           <PrivateRoute exact path="/" isAuth={isAuth} component={Home} />
           {/* <PrivateRoute
